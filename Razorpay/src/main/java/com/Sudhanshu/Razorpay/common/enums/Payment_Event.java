@@ -1,0 +1,17 @@
+package com.Sudhanshu.Razorpay.common.enums;
+
+public enum Payment_Event {
+   AUTHORIZE_ATTEMPT,
+    AUTHORIZE_SUCCESS,
+    AUTHORIZE_FAIL,
+    CAPTURE_ATTEMPT,
+    CAPTURE_SUCCESS,
+    CAPTURE_FAILURE,
+    REFUND_ATTEMPT,
+    REFUND_SUCCESS,
+    REFUND_FAILURE,
+    VOID_ATTEMPT,
+    VOID_SUCCESS,
+    VOID_FAILURE
+
+}
