@@ -2,9 +2,14 @@ package com.Sudhanshu.Razorpay.merchant.entity;
 
 import com.Sudhanshu.Razorpay.common.enums.Enviornment;
 import jakarta.persistence.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.UUID;
-
+@Getter
+@Setter
+@Builder
 @Entity
 @Table(name="api_key")
 public class ApiKey {
@@ -20,12 +25,14 @@ public class ApiKey {
     @Column(nullable = false,length = 20)
     private Enviornment enviornment;
     @Column(nullable = false)
+    @Builder.Default
     private Boolean enabled=true;
     @Column(nullable = false,length=100)
     private String KeySecretHash;
     private java.time.LocalDateTime LastUsedAt;
     private java.time.LocalDateTime RotatedAt;
     private java.time.LocalDateTime GracePeriodExpiresAt;
+
 
 
 }

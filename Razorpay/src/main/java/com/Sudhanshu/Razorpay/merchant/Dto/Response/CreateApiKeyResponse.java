@@ -1,5 +1,7 @@
 package com.Sudhanshu.Razorpay.merchant.Dto.Response;
 
+import com.Sudhanshu.Razorpay.common.enums.Enviornment;
+
 import java.util.UUID;
 
 public record CreateApiKeyResponse(
@@ -7,6 +9,6 @@ public record CreateApiKeyResponse(
         UUID id,
         String keyId,
         String keySecret,
-        String Environment,
-) {
-}
+        Enviornment enviornment
+) {}
+
