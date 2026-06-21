@@ -3,28 +3,39 @@ package com.Sudhanshu.Razorpay.payment.Entity;
 import com.Sudhanshu.Razorpay.common.Entity.Money;
 import com.Sudhanshu.Razorpay.common.enums.order_status;
 import jakarta.persistence.*;
+import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
 import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.UUID;
-
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name="order_record")
+@Builder
+@Getter
+@Setter
+@Data
 public class Ordered_Record {
     @Id
     @GeneratedValue(strategy= GenerationType.UUID)
     private UUID id;
 
     @Column(name="merchant_id",nullable = false)
-    private UUID merchant_Id;
+    private UUID merchantId;
+
+    @Column(nullable = false)
+    private String receipt;
+
 
     @Embedded
-    private Money money;
+    private Money Amount;
     @Enumerated(EnumType.STRING)
-    private order_status status=order_status.CREATED;
+    private order_status Order_status=order_status.CREATED;
     @Column(nullable = false)
+    @Builder.Default
     private Integer attempts=0;
 
     @JdbcTypeCode(SqlTypes.JSON)
@@ -32,6 +43,7 @@ public class Ordered_Record {
     private Map<String,Object> notes;
     @Column(nullable = false)
     private LocalDateTime expiresAt;
+
 
 
 }

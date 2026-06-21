@@ -2,7 +2,12 @@ package com.Sudhanshu.Razorpay.common.Entity;
 
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.Entity;
-import lombok.AllArgsConstructor;
+import lombok.*;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@EqualsAndHashCode
 
 
 @Embeddable
