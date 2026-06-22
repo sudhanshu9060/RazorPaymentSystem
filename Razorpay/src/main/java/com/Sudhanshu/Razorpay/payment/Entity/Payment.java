@@ -4,13 +4,23 @@ import com.Sudhanshu.Razorpay.common.Entity.Money;
 import com.Sudhanshu.Razorpay.common.enums.Payment_Method;
 import com.Sudhanshu.Razorpay.common.enums.Payment_Status;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.UUID;
-
+@Getter
+@Setter
 @Entity
-@Table(name="payment")
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name="payment", indexes = {
+        @Index(name = "idx_payment_order_id", columnList = "order_id"),
+        @Index(name = "idx_payment_merchant_id", columnList = "merchant_id")
+})
 public class Payment {
 
     @Id

@@ -7,7 +7,7 @@ public enum order_status {
     PAYMENT_SUCCESSFUL,
     PAYMENT_FROZEN,
     REFUND,
-    CREATED
+    CANCELLED, PAID, CREATED
 
 
 }
