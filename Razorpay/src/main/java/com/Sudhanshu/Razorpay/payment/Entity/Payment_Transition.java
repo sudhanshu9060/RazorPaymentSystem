@@ -1,5 +1,6 @@
 package com.Sudhanshu.Razorpay.payment.Entity;
 
+import com.Sudhanshu.Razorpay.common.Entity.BaseEntity;
 import com.Sudhanshu.Razorpay.common.enums.Actor;
 import com.Sudhanshu.Razorpay.common.enums.Payment_Event;
 import com.Sudhanshu.Razorpay.common.enums.Payment_Status;
@@ -12,7 +13,7 @@ import java.util.UUID;
 @Table(name="payment_transition_Log",indexes = {
 @Index(name = "idx_payment_transition_log_payment_id", columnList = "payment_id")
 })
-public class Payment_Transition {
+public class Payment_Transition extends BaseEntity {
 
 
     @Id

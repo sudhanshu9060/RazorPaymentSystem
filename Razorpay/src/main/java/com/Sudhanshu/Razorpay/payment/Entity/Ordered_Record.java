@@ -1,5 +1,6 @@
 package com.Sudhanshu.Razorpay.payment.Entity;
 
+import com.Sudhanshu.Razorpay.common.Entity.BaseEntity;
 import com.Sudhanshu.Razorpay.common.Entity.Money;
 import com.Sudhanshu.Razorpay.common.enums.order_status;
 import jakarta.persistence.*;
@@ -21,7 +22,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Data
-public class Ordered_Record {
+public class Ordered_Record  extends BaseEntity {
     @Id
     @GeneratedValue(strategy= GenerationType.UUID)
     private UUID id;

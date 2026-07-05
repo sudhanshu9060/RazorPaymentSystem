@@ -1,27 +1,29 @@
 package com.Sudhanshu.Razorpay.payment.Entity;
 
+import com.Sudhanshu.Razorpay.common.Entity.BaseEntity;
 import com.Sudhanshu.Razorpay.common.Entity.Money;
 import com.Sudhanshu.Razorpay.common.enums.Payment_Method;
 import com.Sudhanshu.Razorpay.common.enums.Payment_Status;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.UUID;
-@Getter
-@Setter
+
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
+
 @Table(name="payment", indexes = {
         @Index(name = "idx_payment_order_id", columnList = "order_id"),
         @Index(name = "idx_payment_merchant_id", columnList = "merchant_id")
 })
-public class Payment {
+@Builder
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+
+public class Payment extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -33,17 +35,19 @@ public class Payment {
     private UUID merchant_id;
     @Embedded
 
-    private Money money;
+    private Money amount;
     @Column(nullable = false,length = 100)
     private String idempotent_key;
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-
+    @Column(nullable = false, length = 30)
     private Payment_Status status;
     @Column(nullable = false)
     private Payment_Method method;
-    @Column(name ="method_details",columnDefinition = "jsonb")
 
+
+    @Column(length=100)
+    private String processorReference;
+    @Column(name ="method_details",columnDefinition = "jsonb")
     private Map<String,Object> methodDetails;
     @Column(length = 100)
 

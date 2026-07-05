@@ -1,5 +1,6 @@
 package com.Sudhanshu.Razorpay.merchant.entity;
 
+import com.Sudhanshu.Razorpay.common.Entity.BaseEntity;
 import com.Sudhanshu.Razorpay.common.enums.UserRole;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
@@ -18,7 +19,7 @@ import java.util.UUID;
 @Setter
 @Slf4j
 @Builder
-public class AppUser {
+public class AppUser extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column()

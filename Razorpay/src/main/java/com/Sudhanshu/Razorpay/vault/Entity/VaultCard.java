@@ -1,5 +1,6 @@
 package com.Sudhanshu.Razorpay.vault.Entity;
 
+import com.Sudhanshu.Razorpay.common.Entity.BaseEntity;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -9,7 +10,7 @@ import java.util.UUID;
 @Table(name = "vault_card")
 
 
-public class VaultCard {
+public class VaultCard extends BaseEntity {
 
 
 
