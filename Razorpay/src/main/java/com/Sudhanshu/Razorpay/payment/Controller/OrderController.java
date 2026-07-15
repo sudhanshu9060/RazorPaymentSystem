@@ -27,11 +27,11 @@ import java.util.UUID;
 public class OrderController {
 
     private final OrderService orderService;
-    UUID merchantId = UUID.fromString("c1259ae9-7e2d-43a3-832c-8cdf406c173a"); //TODO: replace it with MerchantContext
+    UUID merchant_id = UUID.fromString("c1259ae9-7e2d-43a3-832c-8cdf406c173a"); //TODO: replace it with MerchantContext
 
     @PostMapping
     public ResponseEntity<OrderResponse> create(@RequestBody @Valid CreateOrderRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(orderService.create(merchantId, request));
+                .body(orderService.create(merchant_id, request));
     }
 }

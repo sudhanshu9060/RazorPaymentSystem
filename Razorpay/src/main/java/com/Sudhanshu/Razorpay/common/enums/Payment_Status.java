@@ -12,6 +12,8 @@ public enum Payment_Status {
     REFUNDED,
     PARTIALLY_REFUNDED,
     SETTLED,
-    AUTH_EXPIRES
+    AUTH_EXPIRES,
+    AUTH_EXPIRED,
+    AUTHORIZING
 
 }

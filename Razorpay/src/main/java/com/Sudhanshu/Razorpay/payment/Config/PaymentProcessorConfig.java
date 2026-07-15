@@ -2,9 +2,9 @@ package com.Sudhanshu.Razorpay.payment.Config;
 
 import com.Sudhanshu.Razorpay.common.enums.Payment_Method;
 import com.Sudhanshu.Razorpay.payment.Processor.PaymentProcessor;
-import com.Sudhanshu.Razorpay.payment.Processor.Stratefy.CardPaymentProcessor;
-import com.Sudhanshu.Razorpay.payment.Processor.Stratefy.NetBankingPaymentProcessor;
 import com.Sudhanshu.Razorpay.payment.Processor.Stratefy.UpiPaymentProcessor;
+import com.Sudhanshu.Razorpay.payment.Processor.Stratefy.NetBankingPaymentProcessor;
+import com.Sudhanshu.Razorpay.payment.Processor.Stratefy.CardPaymentProcessor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

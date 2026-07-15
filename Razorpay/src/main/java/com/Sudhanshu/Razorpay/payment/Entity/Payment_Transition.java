@@ -5,10 +5,15 @@ import com.Sudhanshu.Razorpay.common.enums.Actor;
 import com.Sudhanshu.Razorpay.common.enums.Payment_Event;
 import com.Sudhanshu.Razorpay.common.enums.Payment_Status;
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
-
+@Builder
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name="payment_transition_Log",indexes = {
 @Index(name = "idx_payment_transition_log_payment_id", columnList = "payment_id")

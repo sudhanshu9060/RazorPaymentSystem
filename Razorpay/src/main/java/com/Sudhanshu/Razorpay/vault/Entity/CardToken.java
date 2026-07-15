@@ -2,12 +2,18 @@ package com.Sudhanshu.Razorpay.vault.Entity;
 
 import com.Sudhanshu.Razorpay.common.Entity.BaseEntity;
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Entity
 @Table(name = "vault_card_token")
-public class VaultCardToken  extends BaseEntity  {
+public class CardToken extends BaseEntity  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

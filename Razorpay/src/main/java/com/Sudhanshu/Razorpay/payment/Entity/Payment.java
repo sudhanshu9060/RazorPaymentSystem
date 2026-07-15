@@ -32,7 +32,7 @@ public class Payment extends BaseEntity {
     @JoinColumn(name="order_id",nullable = false)
     private Ordered_Record order;
     @Column(nullable = false)
-    private UUID merchant_id;
+    private UUID merchantId;
     @Embedded
 
     private Money amount;
