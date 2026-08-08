@@ -4,17 +4,15 @@ import com.Sudhanshu.Razorpay.common.enums.Payment_Method;
 import com.Sudhanshu.Razorpay.payment.Processor.PaymentProcessorRouter;
 import com.Sudhanshu.Razorpay.payment.Processor.dto.PaymentProcessorRequest;
 import com.Sudhanshu.Razorpay.payment.Processor.dto.PaymentProcessorResponse;
-import com.Sudhanshu.Razorpay.payment.gateway.PaymentAdapter;
 import com.Sudhanshu.Razorpay.payment.gateway.dto.PaymentRequest;
 import com.Sudhanshu.Razorpay.payment.gateway.dto.PaymentResult;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import java.awt.geom.Path2D;
 import java.util.UUID;
 
-@Component
+@Component("NETBANKING1")
 @Slf4j
 @RequiredArgsConstructor
 public class NetBankingAdapter implements PaymentAdapter {

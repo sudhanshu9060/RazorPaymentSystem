@@ -1,7 +1,7 @@
 package com.Sudhanshu.Razorpay.payment.Config;
 
 import com.Sudhanshu.Razorpay.common.enums.Payment_Method;
-import com.Sudhanshu.Razorpay.payment.gateway.PaymentAdapter;
+import com.Sudhanshu.Razorpay.payment.gateway.adapter.PaymentAdapter;
 import com.Sudhanshu.Razorpay.payment.gateway.adapter.CardPaymentAdapter;
 import com.Sudhanshu.Razorpay.payment.gateway.adapter.NetBankingAdapter;
 import com.Sudhanshu.Razorpay.payment.gateway.adapter.UpiPaymentAdapter;

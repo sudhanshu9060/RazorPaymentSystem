@@ -2,11 +2,16 @@ package com.Sudhanshu.Razorpay.merchant.entity;
 
 import com.Sudhanshu.Razorpay.common.Entity.BaseEntity;
 import com.Sudhanshu.Razorpay.common.enums.UserRole;
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
+import org.jspecify.annotations.Nullable;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -19,7 +24,7 @@ import java.util.UUID;
 @Setter
 @Slf4j
 @Builder
-public class AppUser extends BaseEntity {
+public class AppUser extends BaseEntity implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column()
@@ -27,13 +32,31 @@ public class AppUser extends BaseEntity {
     @ManyToOne(fetch =FetchType.LAZY)
     @JoinColumn(name="merchant_id")
     private Merchant merchant;
-    @Column(length=50,nullable = false,unique = true)
+    @Column(name = "mail",length=50,nullable = false,unique = true)
 
-    private  String Mail;
+
+    private  String email;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private UserRole role;
-    private  String Password_Hash;
+    private  String passwordHash;
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(
+                new SimpleGrantedAuthority("ROLE_" + role)
+        );
+
+    }
+
+    @Override
+    public @Nullable String getPassword() {
+        return passwordHash;
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
 }
 

@@ -1,4 +1,4 @@
-package com.Sudhanshu.Razorpay.payment.gateway;
+package com.Sudhanshu.Razorpay.payment.gateway.adapter;
 
 import com.Sudhanshu.Razorpay.payment.gateway.dto.PaymentRequest;
 import com.Sudhanshu.Razorpay.payment.gateway.dto.PaymentResult;

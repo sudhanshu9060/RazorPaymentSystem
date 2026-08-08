@@ -62,8 +62,8 @@ public class OrderServiceImpl implements OrderService {
         order = orderRepository.save(order);
 
 
-        return new OrderResponse(order.getMerchantId(),
-                order.getId(),
+        return new OrderResponse(order.getId(),
+                order.getMerchantId(),
                 order.getReceipt(),
                 order.getAmount(),
                 order.getOrder_status()

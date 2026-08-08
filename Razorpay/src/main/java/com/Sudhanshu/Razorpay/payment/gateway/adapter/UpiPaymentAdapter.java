@@ -4,7 +4,6 @@ import com.Sudhanshu.Razorpay.common.enums.Payment_Method;
 import com.Sudhanshu.Razorpay.payment.Processor.PaymentProcessorRouter;
 import com.Sudhanshu.Razorpay.payment.Processor.dto.PaymentProcessorRequest;
 import com.Sudhanshu.Razorpay.payment.Processor.dto.PaymentProcessorResponse;
-import com.Sudhanshu.Razorpay.payment.gateway.PaymentAdapter;
 import com.Sudhanshu.Razorpay.payment.gateway.dto.PaymentRequest;
 import com.Sudhanshu.Razorpay.payment.gateway.dto.PaymentResult;
 import lombok.RequiredArgsConstructor;
@@ -15,14 +14,14 @@ import java.util.UUID;
 
 @RequiredArgsConstructor
 @Slf4j
-@Component
+@Component("Upi")
 public class UpiPaymentAdapter implements PaymentAdapter {
 
     private final PaymentProcessorRouter paymentProcessorRouter;
 
     @Override
     public PaymentResult initiate(PaymentRequest request) {
-        log.info("Initiate Payment with net banking ,paymentid{}", request.paymentId());
+        log.info("Initiate Payment with UPI ,paymentid{}", request.paymentId());
         try {
             PaymentProcessorRequest processorRequest = PaymentProcessorRequest.nonCard(
                     Payment_Method.UPI,

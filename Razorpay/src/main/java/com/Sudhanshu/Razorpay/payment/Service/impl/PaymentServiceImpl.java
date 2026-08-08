@@ -55,6 +55,7 @@ public class PaymentServiceImpl implements  PaymentService {
                 .status(Payment_Status.CREATED)
                 .method(request.method())
                 .methodDetails(request.methodDetails())
+                .idempotent_key(UUID.randomUUID().toString())
                 .build();
         payment = paymentRepository.save(payment);
 
@@ -66,6 +67,8 @@ public class PaymentServiceImpl implements  PaymentService {
                 request.orderId(), merchantId,
                 order.getAmount(), request.method(),
                 request.methodDetails());
+
+        paymentTransitionService.apply(payment,Payment_Event.AUTHORIZE_ATTEMPT);
         PaymentResult result= paymentGatewayRouter.initiate(paymentRequest);
 
         switch (result) {
@@ -115,6 +118,51 @@ public class PaymentServiceImpl implements  PaymentService {
 
 
     return paymentMapper.toResponse((payment));
+    }
+
+    @Override
+    @Transactional
+    public void resolveAuthorization(UUID paymentId, boolean approve,
+                                     String bankRef, String errorCode, String errorDescription) {
+
+        Payment payment = paymentRepository.findById(paymentId)
+                .orElseThrow(() -> new ResourceNotFoundException("Payment", paymentId));
+
+        if (payment.getStatus() != Payment_Status.AUTHORIZING) {
+            log.warn("Payment is not in Authorizing state, paymentID: {}, status: {}", paymentId, payment.getStatus());
+            return;
+        }
+
+        Ordered_Record orderRecord = payment.getOrder();
+
+        if (approve) {
+            paymentTransitionService.apply(payment, Payment_Event.AUTHORIZE_SUCCESS);
+            payment.setBankReference(bankRef);
+            payment.setAuthorizedAt(LocalDateTime.now());
+
+            // Auto-capture
+            paymentTransitionService.apply(payment, Payment_Event.CAPTURE_REQUEST);
+            PaymentResult captureResult = paymentGatewayRouter.capture(payment.getMethod(), paymentId);
+
+            if(captureResult instanceof PaymentResult.Sucess success) {
+                paymentTransitionService.apply(payment, Payment_Event.CAPTURE_SUCCESS);
+                payment.setCapturedAt(LocalDateTime.now());
+                orderRecord.setOrder_status(order_status.PAID);
+            } else if (captureResult instanceof  PaymentResult.Failure failure){
+                paymentTransitionService.apply(payment, Payment_Event.CAPTURE_FAIL);
+                payment.setErrorCode(failure.errorCode());
+                payment.setErrorDescription(failure.errorDescription());
+            }
+        } else {
+            paymentTransitionService.apply(payment, Payment_Event.AUTHORIZE_FAIL);
+            payment.setErrorCode(errorCode);
+            payment.setErrorDescription(errorDescription);
+        }
+
+        paymentRepository.save(payment);
+        orderRepository.save(orderRecord);
+
+        // TODO: send an outbox (kafka event)
     }
 }
 

@@ -7,7 +7,7 @@ import com.Sudhanshu.Razorpay.payment.Processor.dto.PaymentProcessorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-@Component
+@Component("CardPaymentProcessor")
 @Slf4j
 
 

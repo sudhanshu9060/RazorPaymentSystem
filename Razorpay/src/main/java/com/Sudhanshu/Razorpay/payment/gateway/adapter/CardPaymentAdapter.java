@@ -1,7 +1,6 @@
 package com.Sudhanshu.Razorpay.payment.gateway.adapter;
 
 import com.Sudhanshu.Razorpay.payment.Processor.dto.PaymentProcessorResponse;
-import com.Sudhanshu.Razorpay.payment.gateway.PaymentAdapter;
 import com.Sudhanshu.Razorpay.payment.gateway.dto.PaymentRequest;
 import com.Sudhanshu.Razorpay.payment.gateway.dto.PaymentResult;
 import com.Sudhanshu.Razorpay.vault.service.VaultService;
@@ -11,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
-@Component
+@Component("CARD")
 @Slf4j
 @RequiredArgsConstructor
 
@@ -35,6 +34,6 @@ public class CardPaymentAdapter implements PaymentAdapter {
 
     @Override
     public PaymentResult capture(UUID paymentId) {
-        return null;
+        return  new PaymentResult.Sucess("CARD_REF");
     }
 }

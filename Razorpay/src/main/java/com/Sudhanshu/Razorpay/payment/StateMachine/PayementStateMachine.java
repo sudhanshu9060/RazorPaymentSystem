@@ -13,7 +13,7 @@ public class  PayementStateMachine {
    private record Transition(Payment_Status from, Payment_Event event) {}
     private static final Map<Transition,Payment_Status> TRANSITION = Map.ofEntries(
             Map.entry(new Transition(Payment_Status.CREATED, Payment_Event.AUTHORIZE_ATTEMPT), Payment_Status.AUTHORIZING),
-            Map.entry(new Transition(Payment_Status.AUTHORIZED, Payment_Event.AUTHORIZE_SUCCESS), Payment_Status.AUTHORIZED),
+            Map.entry(new Transition(Payment_Status.AUTHORIZING, Payment_Event.AUTHORIZE_SUCCESS), Payment_Status.AUTHORIZED),
             Map.entry(new Transition(Payment_Status.AUTHORIZING, Payment_Event.AUTHORIZE_FAIL), Payment_Status.FAILED),
             Map.entry(new Transition(Payment_Status.AUTHORIZED, Payment_Event.CAPTURE_REQUEST), Payment_Status.CAPTURING),
             Map.entry(new Transition(Payment_Status.CAPTURING, Payment_Event.CAPTURE_SUCCESS), Payment_Status.CAPTURED),
@@ -32,8 +32,10 @@ public class  PayementStateMachine {
         Payment_Status next = TRANSITION.get(new Transition(current, event));
         if (next == null) {
             throw new InvalidStateTransitionException(current.name(), event.name());
+
         }
         return next;
     }
+
 
 }
