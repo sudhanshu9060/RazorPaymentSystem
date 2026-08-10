@@ -1,5 +1,6 @@
 package com.Sudhanshu.Razorpay.merchant.Security;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpRequest;
@@ -11,11 +12,15 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-@Configuration
-public class WebSecurityConfig {
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+@Configuration
+@RequiredArgsConstructor
+public class WebSecurityConfig {
+private final JwtAuthenticationFilter jwtAuthenticationFilter;
+private final ApiKeyAuthenticationFilter apiKeyAuthenticationFilter;
     private static final String[] JWT_ROUTES = {"/v1/auth/**", "/v1/merchants/**", "/v1/admin/**", "/actuator/**"};
-    private static final String[] API_KEY_ROUTES = {"/v1/orders/**", "/v1/payments/**", "/v1/vault/**"};
+    private static final String[] API_KEY_ROUTES = {"/v1/orders", "/v1/payments/**", "/v1/vault/**"};
     @Bean
     public SecurityFilterChain jwtChain(HttpSecurity http)
     {
@@ -26,7 +31,20 @@ public class WebSecurityConfig {
                         .anyRequest().authenticated()
                 )
 
-                .formLogin(form->form.disable())
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .build();
+    }
+    @Bean
+    public SecurityFilterChain ApiKeyChain(HttpSecurity http)
+    {
+        return http.csrf(httpSecurityCsrfConfigurer -> httpSecurityCsrfConfigurer.disable())
+                .securityMatcher(API_KEY_ROUTES)
+                .authorizeHttpRequests(auth -> auth
+                        .anyRequest().authenticated()
+                )
+
+                .addFilterBefore(apiKeyAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .build();
     }

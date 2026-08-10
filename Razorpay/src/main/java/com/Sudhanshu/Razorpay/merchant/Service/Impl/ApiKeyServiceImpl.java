@@ -14,6 +14,7 @@ import com.Sudhanshu.Razorpay.merchant.entity.Merchant;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.Nullable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,6 +32,8 @@ public class ApiKeyServiceImpl implements ApikeyService{
     private final MerchantRepository merchantRepository;
     private final ApiKeyRepository apiKeyRepository;
 
+    private final BCryptPasswordEncoder bcrypt=new BCryptPasswordEncoder();
+
     @Override
     @Transactional
     public CreateApiKeyResponse create(UUID merchantId, CreateApiKeyRequest request) {
@@ -42,8 +45,8 @@ public class ApiKeyServiceImpl implements ApikeyService{
 
         ApiKey apiKey = ApiKey.builder()
                 .merchant(merchant)
-                .Key_id(keyId)
-                .KeySecretHash(rawSecret) // TODO: encode with BcryptPasswordEncoder
+                .keyId(keyId)
+                .KeySecretHash(bcrypt.encode(rawSecret))
                 .enviornment(request.enviornment())
                 .build();
 
@@ -58,7 +61,7 @@ public class ApiKeyServiceImpl implements ApikeyService{
                 .map(apiKey ->
                 new ApiKeyResponse(
                         apiKey.getId(),
-                        apiKey.getKey_id(),
+                        apiKey.getKeyId(),
                         apiKey.getEnviornment(),
                         apiKey.getEnabled(),
                         apiKey.getLastUsedAt(), null))
@@ -84,12 +87,12 @@ public class ApiKeyServiceImpl implements ApikeyService{
 
         String newRawSecret = RandomizerUtil.randomBase64(40);
         apiKey.setPreviousKeySecretHash(apiKey.getKeySecretHash());
-        apiKey.setKeySecretHash(newRawSecret);  // TODO: encode with BcryptPasswordEncoder
+        apiKey.setKeySecretHash(bcrypt.encode(newRawSecret));  // TODO: encode with BcryptPasswordEncoder
         apiKey.setRotatedAt(LocalDateTime.now());
         apiKey.setGracePeriodExpiresAt(LocalDateTime.now().plusHours(24));
         apiKey = apiKeyRepository.save(apiKey);
 
-        return new CreateApiKeyResponse(apiKey.getId(), apiKey.getKey_id(),
+        return new CreateApiKeyResponse(apiKey.getId(), apiKey.getKeyId(),
                 newRawSecret, apiKey.getEnviornment());
     }
 }

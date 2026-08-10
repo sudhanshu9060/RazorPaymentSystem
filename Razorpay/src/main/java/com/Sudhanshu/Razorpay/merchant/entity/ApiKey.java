@@ -30,8 +30,8 @@ public class ApiKey extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="merchant_id")
     private Merchant merchant;
-    @Column(length = 50,nullable = false)
-    private String Key_id;
+    @Column(name="key_id" ,length = 50,nullable = false)
+    private String keyId;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false,length = 20)
     private Enviornment enviornment;
