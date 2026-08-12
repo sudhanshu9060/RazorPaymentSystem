@@ -3,6 +3,7 @@ package com.Sudhanshu.Razorpay.merchant.Security;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpRequest;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
@@ -22,6 +23,7 @@ private final ApiKeyAuthenticationFilter apiKeyAuthenticationFilter;
     private static final String[] JWT_ROUTES = {"/v1/auth/**", "/v1/merchants/**", "/v1/admin/**", "/actuator/**"};
     private static final String[] API_KEY_ROUTES = {"/v1/orders", "/v1/payments/**", "/v1/vault/**"};
     @Bean
+    @Order(1)
     public SecurityFilterChain jwtChain(HttpSecurity http)
     {
         return http.csrf(httpSecurityCsrfConfigurer -> httpSecurityCsrfConfigurer.disable())
@@ -36,6 +38,7 @@ private final ApiKeyAuthenticationFilter apiKeyAuthenticationFilter;
                 .build();
     }
     @Bean
+    @Order(2)
     public SecurityFilterChain ApiKeyChain(HttpSecurity http)
     {
         return http.csrf(httpSecurityCsrfConfigurer -> httpSecurityCsrfConfigurer.disable())

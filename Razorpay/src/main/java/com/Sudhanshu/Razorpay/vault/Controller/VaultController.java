@@ -1,5 +1,6 @@
 package com.Sudhanshu.Razorpay.vault.Controller;
 
+import com.Sudhanshu.Razorpay.merchant.Security.MerchantContext;
 import com.Sudhanshu.Razorpay.vault.Dto.Request.TokenizeRequest;
 import com.Sudhanshu.Razorpay.vault.Dto.Response.TokenizeResponse;
 import com.Sudhanshu.Razorpay.vault.service.VaultService;
@@ -19,12 +20,13 @@ import java.util.UUID;
 public class VaultController {
 
     private final VaultService vaultService;
-    UUID merchantId = UUID.fromString("c1259ae9-7e2d-43a3-832c-8cdf406c173a");
+    private final MerchantContext merchantContext;
+    //UUID merchantId = UUID.fromString("c1259ae9-7e2d-43a3-832c-8cdf406c173a");
     @PostMapping("/tokenize")
 
     public ResponseEntity<TokenizeResponse> tokenize(@RequestBody TokenizeRequest tokenizeRequest) {
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(vaultService.tokenize(tokenizeRequest,merchantId));
+                .body(vaultService.tokenize(tokenizeRequest,merchantContext.getMerchantId()));
     }
 
 }
