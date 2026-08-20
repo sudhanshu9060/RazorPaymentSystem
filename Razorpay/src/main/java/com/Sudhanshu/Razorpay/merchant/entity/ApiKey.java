@@ -44,11 +44,15 @@ public class ApiKey extends BaseEntity {
     private String previousKeySecretHash;
     private java.time.LocalDateTime LastUsedAt;
     private java.time.LocalDateTime RotatedAt;
-    private java.time.LocalDateTime GracePeriodExpiresAt;
+    private java.time.LocalDateTime gracePeriodExpiresAt;
     @CreationTimestamp
     private LocalDateTime createdAt;
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
+    public boolean isInGracePeriod() {
+        return gracePeriodExpiresAt != null && LocalDateTime.now().isBefore(gracePeriodExpiresAt);
+    }
 
 
 

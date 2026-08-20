@@ -7,6 +7,10 @@ spring:
       username: postgres
       password: MyNewPassword123
 
+  data:
+      redis:
+        host: localhost
+        port: 6379
 
   jpa:
     hibernate:
